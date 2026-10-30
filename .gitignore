@@ -1,0 +1,31 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Flask local database
+instance/*.db
+
+# Machine learning model files
+models/*.joblib
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Testing artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Operating system files
+.DS_Store
+Thumbs.db

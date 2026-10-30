@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}FITX | Register{% endblock %}
+{% block content %}
+<section class="auth-page">
+  <div class="auth-card wide">
+    <div class="brand auth-brand"><span class="brand-mark">F</span><span>FITX</span></div>
+    <p class="eyebrow">NEW PLAYER REGISTRATION</p>
+    <h1>Build your player.</h1>
+    {% if error %}<div class="error-box">{{ error }}</div>{% endif %}
+    <form method="post" class="form-stack">
+      <label>Name<input name="name" type="text" placeholder="Your name" required></label>
+      <label>Email<input name="email" type="email" placeholder="you@example.com" required></label>
+      <label>Password<input name="password" type="password" placeholder="At least 6 characters" minlength="6" required></label>
+      <label>Age<input name="age" type="number" min="13" max="120" placeholder="Your age" required></label>
+      <label>Activity level
+        <select name="activity_level">
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Regular</option>
+        </select>
+      </label>
+      <label>Your focus
+        <select name="goal">
+          <option>Consistency</option>
+          <option>Endurance</option>
+          <option>Strength</option>
+          <option>Wellness</option>
+        </select>
+      </label>
+      <button class="primary-btn" type="submit">Start playing <span>→</span></button>
+    </form>
+    <p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
+</section>
+{% endblock %}

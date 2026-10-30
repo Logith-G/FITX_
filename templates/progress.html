@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}FITX | Progress{% endblock %}
+{% block page_title %}Progress{% endblock %}
+{% block content %}
+<section class="page-intro"><div><p class="eyebrow">CONSISTENCY / OVERVIEW</p><h2>See your momentum.</h2><p class="muted">Every active day is a vote for the routine you are building.</p></div><div class="intro-reward">{{ progress.total_minutes }}<small>TOTAL MINUTES</small></div></section>
+<div class="metric-grid progress-metrics">
+  <article class="metric-card"><span>Activities</span><strong>{{ progress.total_activities }}</strong><small>All time</small></article>
+  <article class="metric-card"><span>Active days</span><strong>{{ progress.active_days }}</strong><small>Unique days</small></article>
+  <article class="metric-card"><span>Current streak</span><strong>🔥 {{ progress.weekly.streak }}</strong><small>Keep the chain alive</small></article>
+  <article class="metric-card"><span>Longest streak</span><strong>{{ progress.longest_streak }}</strong><small>Personal best</small></article>
+</div>
+<div class="content-grid">
+  <section class="panel"><div class="panel-header"><div><p class="eyebrow">WEEKLY PROGRESS</p><h3>Goal pace</h3></div></div><div class="goal-line"><span>Minutes</span><b>{{ progress.weekly.weekly_minutes }} / {{ progress.goal.weekly_minutes }}</b></div><div class="progress"><span style="width:{{ progress.weekly.minutes_progress }}%"></span></div><div class="goal-line"><span>Active days</span><b>{{ progress.weekly.active_days_7 }} / {{ progress.goal.weekly_days }}</b></div><div class="progress"><span style="width:{{ progress.weekly.days_progress }}%"></span></div><p class="motivation-callout">{{ motivation }}</p></section>
+  <section class="panel"><div class="panel-header"><div><p class="eyebrow">MONTHLY SUMMARY</p><h3>{{ progress.monthly_count }} sessions this month</h3></div></div><div class="summary-list"><div><span>Minutes</span><b>{{ progress.monthly_minutes }}</b></div><div><span>Average duration</span><b>{{ progress.average_duration }} min</b></div><div><span>Most performed</span><b>{{ progress.most_performed }}</b></div></div></section>
+</div>
+<section class="panel calendar-panel"><div class="panel-header"><div><p class="eyebrow">FITNESS CALENDAR</p><h3>{{ progress.calendar|length }} active days recorded</h3></div><span class="calendar-legend"><i class="low"></i> Low <i class="high"></i> High</span></div><div class="calendar-grid calendar-head"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="calendar-grid">{% for day in range(1, 32) %}{% set key = '%04d-%02d-%02d'|format(today_year, today_month, day) %}<div class="calendar-day {% if key in progress.calendar %}{% if progress.calendar[key] >= 45 %}high{% else %}low{% endif %}{% endif %}"><span>{{ day }}</span>{% if key in progress.calendar %}<b>{{ progress.calendar[key] }}m</b>{% endif %}</div>{% endfor %}</div></section>
+{% endblock %}

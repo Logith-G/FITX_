@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FITX{% endblock %}</title>
+  <meta name="description" content="FITX turns real movement into game progress.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<div class="app-shell">
+  {% if current_user %}
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark">F</span><span>FITX</span><em>PLAY MODE</em></div>
+    <nav aria-label="Main navigation">
+      <a href="{{ url_for('dashboard') }}"><span>⌂</span> Dashboard</a>
+      <a href="{{ url_for('activities_page') }}"><span>🏃</span> Activities</a>
+      <a href="{{ url_for('progress_page') }}"><span>▦</span> Progress</a>
+      <a href="{{ url_for('game_page') }}"><span>▶</span> FITX Run</a>
+      <a href="{{ url_for('challenges_page') }}"><span>✦</span> Missions</a>
+      <a href="{{ url_for('leaderboard_page') }}"><span>♛</span> Leaderboard</a>
+      <a href="{{ url_for('achievements_page') }}"><span>◆</span> Achievements</a>
+      <a href="{{ url_for('rewards_page') }}"><span>◈</span> Reward shop</a>
+      <a href="{{ url_for('profile_page') }}"><span>◎</span> Profile</a>
+    </nav>
+    <div class="side-note"><strong>FITX RUN</strong><br>Every move powers your next level.</div>
+    <a class="logout-link" href="{{ url_for('logout') }}">↪ Sign out</a>
+  </aside>
+  {% endif %}
+
+  <main class="main-content {% if not current_user %}full-width{% endif %}">
+    {% if current_user %}
+    <header class="topbar">
+      <button class="menu-btn" aria-label="Toggle menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+      <div><div class="eyebrow">FITX FITNESS GAME</div><h1>{% block page_title %}{% endblock %}</h1></div>
+      <div class="hud-values"><span>🔥 {{ game_user.streak }}</span><span>★ {{ game_user.xp }} XP</span><span>◈ {{ game_user.coins }}</span><a class="user-pill" href="{{ url_for('profile_page') }}">{{ current_user['name'][0]|upper }}</a></div>
+    </header>
+    {% endif %}
+    {% with messages = get_flashed_messages() %}{% if messages %}<div class="flash">{{ messages[-1] }}</div>{% endif %}{% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

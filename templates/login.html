@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}FITX | Login{% endblock %}
+{% block content %}
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="brand auth-brand"><span class="brand-mark">F</span><span>FITX</span></div>
+    <p class="eyebrow">RETURNING PLAYER</p>
+    <h1>Ready to level up?</h1>
+    <p class="muted">Your next streak, mission, and reward are waiting.</p>
+    {% if error %}<div class="error-box">{{ error }}</div>{% endif %}
+    <form method="post" class="form-stack">
+      <label>Email<input name="email" type="email" placeholder="you@example.com" required></label>
+      <label>Password<input name="password" type="password" placeholder="••••••••" required></label>
+      <button class="primary-btn" type="submit">Enter FITX <span>→</span></button>
+    </form>
+    <p class="auth-switch">New to FITX? <a href="{{ url_for('register') }}">Create an account</a></p>
+  </div>
+</section>
+{% endblock %}

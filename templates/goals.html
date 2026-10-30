@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}FITX | Goals{% endblock %}
+{% block page_title %}Goals & profile{% endblock %}
+{% block content %}
+<div class="content-grid">
+  <section class="panel">
+    <div class="panel-header"><div><h3>Weekly goal</h3><p class="muted">Set a target that is realistic for your routine.</p></div></div>
+    <form id="goalForm" class="form-stack">
+      <label>Weekly minutes<input name="weekly_minutes" type="number" min="30" max="1000" value="{{ goal.weekly_minutes if goal else 150 }}" required></label>
+      <label>Active days per week<input name="weekly_days" type="number" min="1" max="7" value="{{ goal.weekly_days if goal else 5 }}" required></label>
+      <button class="primary-btn" type="submit">Save goal</button>
+      <div id="goalMessage" class="form-message" aria-live="polite"></div>
+    </form>
+  </section>
+  <section class="panel">
+    <div class="panel-header"><div><h3>Profile</h3><p class="muted">Used to personalize the dashboard.</p></div></div>
+    <form id="profileForm" class="form-stack">
+      <label>Name<input name="name" type="text" value="{{ user.name }}" required></label>
+      <label>Focus<select name="goal"><option {% if user.goal == 'Consistency' %}selected{% endif %}>Consistency</option><option {% if user.goal == 'Endurance' %}selected{% endif %}>Endurance</option><option {% if user.goal == 'Strength' %}selected{% endif %}>Strength</option><option {% if user.goal == 'Wellness' %}selected{% endif %}>Wellness</option></select></label>
+      <button class="primary-btn" type="submit">Save profile</button>
+      <div id="profileMessage" class="form-message" aria-live="polite"></div>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}FITX | Activities{% endblock %}
+{% block page_title %}Activities{% endblock %}
+{% block content %}
+<section class="session-stage">
+  <div class="session-intro">
+    <p class="eyebrow">AI MOTION CAPTURE</p>
+    <h2>Move naturally.<br><span>FITX will identify it.</span></h2>
+    <p class="muted">Start a session and keep your phone with you. FITX estimates your activity from time, movement, pace, and step signals.</p>
+  </div>
+  <div class="session-console">
+    <div class="signal-orb"><span id="sessionState">Ready</span></div>
+    <div class="session-readout"><strong id="sessionTimer">00:00</strong><span id="signalText">Waiting for movement signals</span></div>
+    <button class="primary-btn" id="sessionButton" type="button">Start session</button>
+    <div id="activityMessage" class="form-message" aria-live="polite"></div>
+  </div>
+</section>
+
+<div class="signal-grid">
+  <div><span>Detected mode</span><strong id="detectedMode">Scanning</strong></div>
+  <div><span>Step estimate</span><strong id="stepCount">0</strong></div>
+  <div><span>Motion confidence</span><strong id="confidence">--</strong></div>
+</div>
+
+<div class="content-grid">
+
+  <section class="panel">
+    <div class="panel-header"><div><p class="eyebrow">QUICK LOG</p><h3>Record an activity</h3><p class="muted">Manual entries power your streak, challenges, and progress.</p></div></div>
+    <form id="activityForm" class="form-stack">
+      <label>Activity type<select name="activity_type" required><option value="Walking">Walking</option><option value="Running">Running</option><option value="Cycling">Cycling</option><option value="Strength">Strength</option><option value="Yoga">Yoga</option><option value="Mobility">Mobility</option><option value="Sports">Sports</option><option value="Dance">Dance</option></select></label>
+      <label>Duration in minutes<input name="duration_minutes" type="number" min="1" max="600" required></label>
+      <label>Date<input name="activity_date" type="date" value="{{ today }}" max="{{ today }}" required></label>
+      <label>Notes<textarea name="notes" rows="2" maxlength="500" placeholder="How did it feel?"></textarea></label>
+      <button class="primary-btn" type="submit">Save activity</button>
+      <div id="manualActivityMessage" class="form-message" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <section class="panel large-panel">
+    <div class="panel-header"><div><h3>AI activity timeline</h3><p class="muted">Automatically identified sessions</p></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Activity</th><th>Minutes</th><th>Points</th><th></th></tr></thead>
+        <tbody id="activityRows">
+        {% for item in activities %}
+          <tr id="activity-{{ item.id }}"><td>{{ item.activity_date }}</td><td>{{ item.activity_type }}</td><td>{{ item.duration_minutes }}</td><td>{{ item.points }}</td><td><button class="icon-btn delete-btn" data-id="{{ item.id }}" aria-label="Delete activity">×</button></td></tr>
+        {% else %}
+          <tr><td colspan="5" class="empty">No activities yet. Log your first one.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/ai-session.js') }}"></script>{% endblock %}
